@@ -462,6 +462,7 @@ def copy(path, dest, replace=False):
     if not replace and os.path.exists(dest):
         raise FilesystemError(u'file exists', 'copy', (path, dest))
     try:
+        os.makedirs(os.path.dirname(dest), mode=0o777, exist_ok=True)
         shutil.copyfile(path, dest)
     except (OSError, IOError) as exc:
         raise FilesystemError(exc, 'copy', (path, dest),
